@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: sans-serif;
+        color: #fff8e1;
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #515151;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container"></div>
+
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"
+    ></script>
+
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+    ></script>
+
+    <script
+      crossorigin
+      src="https://unpkg.com/@babel/standalone/babel.min.js"
+    ></script>
+
+    <script type="text/babel">
+      const root = document.querySelector("#container");
+
+      const Box = (props) => {
+        const style = {
+          display: props.flex,
+          gap: props.gap,
+          flexDirection: props.flexDirection,
+          alignItems: props.alignItems,
+        };
+
+        return <div style={style}>{props.children}</div>;
+      };
+
+      const Counter = (props) => {
+        const style = {
+          fontSize: "5rem",
+        };
+
+        return <span style={style}>{props.counter}</span>;
+      };
+
+      const Button = (props) => {
+        let counter = props.counter;
+        const setCounter = props.setCounter;
+
+        function count() {
+          switch (props.text) {
+            case "decrement":
+              setCounter(counter - 1);
+              return;
+            case "reset":
+              setCounter(0);
+              return;
+            case "increase":
+              setCounter(counter + 1);
+              return;
+          }
+        }
+
+        const style = {
+          width: "12.5rem",
+          padding: "1rem",
+          backgroundColor: "#71717b",
+          border: "none",
+          borderRadius: ".5rem",
+          fontSize: "1.5rem",
+          textTransform: "uppercase",
+        };
+
+        return (
+          <button style={style} onClick={count}>
+            {props.text}
+          </button>
+        );
+      };
+
+      function App() {
+        // let counter = 0;
+
+        const state = React.useState(0);
+
+        const counter = state[0];
+        const setCounter = state[1];
+
+        return (
+          <>
+            <Box
+              flex="flex"
+              gap="2rem"
+              flexDirection="column"
+              alignItems="center"
+            >
+              <Counter counter={counter} />
+              <Box flex="flex" gap="1rem">
+                <Button
+                  text="decrement"
+                  counter={counter}
+                  setCounter={setCounter}
+                />
+                <Button
+                  text="reset"
+                  counter={counter}
+                  setCounter={setCounter}
+                />
+                <Button
+                  text="increase"
+                  counter={counter}
+                  setCounter={setCounter}
+                />
+              </Box>
+            </Box>
+          </>
+        );
+      }
+
+      const application = ReactDOM.createRoot(root);
+      application.render(<App />);
+    </script>
+  </body>
+</html>

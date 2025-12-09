@@ -5,9 +5,23 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Count</title>
+    <style>
+      body,
+      #root {
+        height: 100vh;
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div
+      style="
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        flex-direction: column;
+      "
+      id="root"
+    ></div>
 
     <script
       crossorigin
@@ -26,13 +40,24 @@
 
     <script type="text/babel">
       const Number = ({ value }) => {
-        return <span>{value}</span>;
+        const style = {
+          color: "black",
+          fontSize: "3rem",
+          textAlign: "center",
+          display: "block",
+        };
+        return <span style={style}>{value}</span>;
       };
+
       const Box = ({ children }) => {
-        return <div>{children}</div>;
+        return <div style={{ textAlign: "center" }}>{children}</div>;
       };
 
       const Button = ({ text, update, value }) => {
+        const style = {
+          borderRadius: "10px",
+          justfyContent: "space-between",
+        };
         const execute = () => {
           switch (text) {
             case "decrement":
@@ -43,7 +68,11 @@
               return update(value + 1);
           }
         };
-        return <button onClick={execute}>{text}</button>;
+        return (
+          <button style={style} onClick={execute}>
+            {text}
+          </button>
+        );
       };
 
       const App = () => {
@@ -51,7 +80,13 @@
         return (
           <>
             <Number value={currentState} />
-            <Box>
+            <Box
+              flex="flex"
+              gap="2rem"
+              flexDirection="column"
+              alignItems="center"
+            >
+            
               <Button
                 text="decrement"
                 update={setCurrentState}
